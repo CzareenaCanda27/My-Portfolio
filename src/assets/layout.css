@@ -1,0 +1,287 @@
+:root {
+  --yellow: #ffd447;
+  --purple: #d7b4ff;
+  --purple-hover: #ff9dea;
+  --text-dark: #050300;
+  --sky-blue: #73B1FC;
+}
+
+/* GLOBAL DOCUMENT OVERRIDES */
+html, 
+body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  min-height: 100vh;
+  background-color: var(--sky-blue) !important;
+}
+
+/* FULL PAGE ROOT CONTAINER */
+.layout-root {
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: transparent !important;
+  transition: background-color 0.3s ease;
+}
+
+/* HEADER WRAPPER */
+.layout-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0px;
+  width: 100%;
+  position: relative;
+  z-index: 20;
+  padding-top: 20px;
+  background: transparent !important;
+}
+
+.layout-header,
+.header-top,
+.layout-nav {
+  margin: 0;
+  padding-left: 0;
+  padding-right: 0;
+}
+
+/* LOGO + TITLE ROW */
+.header-top {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+/* LOGO */
+.layout-logo {
+  width: 150px;
+  height: auto;
+  object-fit: contain;
+}
+
+/* TITLE */
+.layout-title {
+  font-family: 'Impact', 'Arial Black', sans-serif;
+  font-size: 80px;
+  font-weight: 900;
+  color: #FDFF00;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-top: 30px;
+  margin-bottom: 10px;
+  -webkit-text-stroke: 3px #000000;
+  text-shadow: 6px 6px 0px #FF8BB4;
+}
+
+/* NAVBAR */
+.layout-nav {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-top: 50px;
+  margin-bottom: 20px;
+  width: 100%;
+}
+
+/* NAV BUTTONS */
+.nav-link {
+  font-family: 'Impact', 'Arial Black', sans-serif;
+  background: #CCCCCC;
+  padding: 8px 32px;
+  border: 3px solid #000000;
+  border-radius: 12px;
+  text-decoration: none;
+  color: #1F195E;
+  font-size: 1.4rem;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  box-shadow: 4px 4px 0px #000000;
+  transition: all 0.1s ease;
+}
+
+.nav-link:hover {
+  background: #EAEAEA;
+  transform: translate(2px, 2px);
+  box-shadow: 2px 2px 0px #000000;
+}
+
+/* LAYOUT CONTENT */
+.layout-content {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  width: 100%;
+  padding: 10px 20px 40px 20px;
+  background: transparent !important;
+}
+
+/* RESPONSIVE BREAKPOINTS */
+@media (max-width: 768px) {
+  .layout-logo { width: 70px; height: 70px; }
+  .layout-title { font-size: 2.5rem; -webkit-text-stroke: 2px #000000; }
+  .layout-nav { gap: 8px; }
+  .nav-link { padding: 6px 16px; font-size: 0.95rem; border: 2px solid #000000; box-shadow: 2px 2px 0px #000000; }
+}
+
+/* ==========================================================================
+   ✨ DIGITAL TRI-NEON MODE (Pink, Green, Blue)
+   ========================================================================== */
+
+/* 1. Deep Space Starfield Background with Twinkle Animation */
+div[data-theme="cyberpunk"] {
+  background-color: #05050a !important;
+  background-image: 
+    radial-gradient(#ff007f, rgba(255, 0, 127, 0.15) 2px, transparent 40px),
+    radial-gradient(#39FF14, rgba(57, 255, 20, 0.1) 1px, transparent 30px),
+    radial-gradient(#00E5FF, rgba(0, 229, 255, 0.1) 2px, transparent 40px) !important;
+  background-position: 0 0, 40px 60px, 130px 270px !important;
+  background-size: 550px 550px, 250px 250px, 150px 150px !important;
+  animation: twinkle 6s infinite alternate;
+  color: #39FF14 !important; 
+}
+
+@keyframes twinkle {
+  from { opacity: 0.7; }
+  to { opacity: 1; }
+}
+
+/* 2. Retro Window Styles: Pink Border, Green Glow */
+div[data-theme="cyberpunk"] .retro-window {
+  background-color: #0a0a14 !important;
+  border: 3px solid #ff007f !important;
+  box-shadow: 0px 0px 15px #ff007f !important;
+}
+
+div[data-theme="cyberpunk"] .window-header {
+  background-color: #ff007f !important;
+  border-bottom: 3px solid #ff007f !important;
+}
+
+/* 3. Cards/Panels: Blue border */
+div[data-theme="cyberpunk"] .info-panel,
+div[data-theme="cyberpunk"] .mission-statement-box,
+div[data-theme="cyberpunk"] .service-card,
+div[data-theme="cyberpunk"] .project-card {
+  background-color: #050a14 !important;
+  border: 2px solid #00E5FF !important;
+  box-shadow: 0px 0px 10px #00E5FF !important;
+}
+
+/* 4. Force Text Visibility */
+div[data-theme="cyberpunk"] *,
+div[data-theme="cyberpunk"] p,
+div[data-theme="cyberpunk"] .service-card *,
+div[data-theme="cyberpunk"] .project-card * {
+  color: #ff0090 !important;
+  text-shadow: none !important;
+}
+
+/* 5. Headings: Green with Pink shadow */
+div[data-theme="cyberpunk"] h1,
+div[data-theme="cyberpunk"] h2,
+div[data-theme="cyberpunk"] h3 {
+  color: #39FF14 !important;
+  text-shadow: 2px 2px 0px #ff007f !important;
+}
+
+/* 6. Navigation: Blue background, Pink border, Green hover */
+div[data-theme="cyberpunk"] .nav-link {
+  background: #001a33;
+  color: #00E5FF !important;
+  border: 3px solid #ff007f;
+  box-shadow: 4px 4px 0px #ff007f;
+}
+
+div[data-theme="cyberpunk"] .nav-link:hover {
+  background: #39FF14;
+  color: #000 !important;
+  box-shadow: 2px 2px 0px #00E5FF;
+}
+
+/* ==========================================================================
+   🚀 PROJECT CARD INTERACTIVE HOVER EFFECTS
+   ========================================================================== */
+
+/* Base container for the card */
+.project-card {
+  position: relative;
+  transition: transform 0.3s ease, box-shadow 0.3s ease !important;
+  overflow: hidden !important; /* This hides the tech stack when not hovered */
+}
+
+/* Hover: Card Scales and Glows */
+.project-card:hover {
+  transform: scale(1.03); 
+  box-shadow: 0px 0px 20px #00E5FF !important; 
+}
+
+/* The Tech Stack container (hidden by default) */
+.tech-stack {
+  position: absolute;
+  bottom: -60px; /* Tucked below the card */
+  left: 0;
+  width: 100%;
+  padding: 12px 0;
+  background-color: rgba(0, 0, 0, 0.9);
+  color: #39FF14; /* Matrix Green */
+  text-align: center;
+  font-family: 'Impact', sans-serif;
+  font-size: 0.9rem;
+  letter-spacing: 1px;
+  border-top: 2px solid #00E5FF;
+  transition: bottom 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); /* Smooth slide */
+}
+
+/* Reveal Tech Stack on hover */
+.project-card:hover .tech-stack {
+  bottom: 0; /* Slides into view */
+}
+
+/* ==========================================================================
+   🚀 FINALIZED INTERACTIVE CARD SYSTEM (Projects & Services)
+   ========================================================================== */
+
+/* 1. Ensure the base cards have a consistent height to prevent layout jumps */
+.project-card, 
+.service-card {
+  position: relative;
+  min-height: 350px; /* Adjust this height based on your longest card content */
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.3s ease, box-shadow 0.3s ease !important;
+  overflow: hidden !important;
+}
+
+/* 2. Hover: Card Scales and Glows */
+.project-card:hover,
+.service-card:hover {
+  transform: scale(1.03); 
+  box-shadow: 0px 0px 20px #00E5FF !important; 
+}
+
+/* 3. The Tech Stack/Link container - MODIFIED FOR COMPACTNESS */
+.tech-stack {
+  position: absolute;
+  bottom: -40px; /* Reduced to show less of the container */
+  left: 0;
+  width: 100%;
+  padding: 8px 0; /* Reduced vertical padding */
+  background-color: rgba(0, 0, 0, 0.9);
+  color: #39FF14;
+  text-align: center;
+  font-family: 'Impact', sans-serif;
+  font-size: 1rem; /* Smaller font size */
+  letter-spacing: 0.5px;
+  border-top: 1px solid #00E5FF; /* Thinner border */
+  transition: bottom 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+/* 4. Reveal Tech Stack on hover */
+.project-card:hover .tech-stack,
+.service-card:hover .tech-stack {
+  bottom: 0; /* Slides into view */
+}

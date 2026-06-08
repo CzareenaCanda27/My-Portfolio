@@ -1,0 +1,146 @@
+@import url('https://fonts.googleapis.com/css2?family=Archivo+Black&display=swap');
+
+/* 1. CORE CONTAINER
+  Forces the containers to sit comfortably at the top under the header 
+  instead of taking up or waiting for a massive height stretch.
+*/
+.about-container {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start; /* Aligns both boxes cleanly by their top borders */
+  gap: 40px;
+  max-width: 1100px;
+  width: 100%;
+  margin: 0 auto;
+  padding-top: 10px; /* Snugs it right below the navbar area */
+  background: transparent !important;
+  box-sizing: border-box;
+}
+
+/* 2. LEFT COLUMN: CAM DISPLAY FRAME */
+.photo-wrapper {
+  flex: 0 1 360px; /* Keeps the container bounded so it won't stretch vertically */
+  display: flex;
+  justify-content: center;
+}
+
+.photo-framed {
+  width: 100%;
+  height: auto;
+  display: block;
+  filter: drop-shadow(6px 6px 0px rgba(0, 0, 0, 0.2));
+}
+
+/* 3. RIGHT COLUMN: OS WINDOW COMPONENT */
+.retro-window {
+  flex: 1;
+  min-width: 340px;
+  max-width: 620px;
+  background-color: #CCCCCC; /* Classic grey system fill */
+  border: 4px solid #000000;
+  box-shadow: 8px 8px 0px #000000; /* Flat hard depth layer */
+  display: flex;
+  flex-direction: column;
+}
+
+/* Windows Top Bar Striping */
+.window-header {
+  background-color: #2B26CE; /* Electric Blue signature block */
+  padding: 10px 20px;
+  border-bottom: 4px solid #000000;
+}
+
+/* Name Inside Header */
+.name-title {
+  font-family: 'Impact', sans-serif;
+  font-style: italic;
+  font-size: 2.6rem;
+  letter-spacing: 2px;
+  color: #FFFFFF;
+  margin: 0;
+  text-transform: uppercase;
+  text-shadow: 3px 3px 0px #000000;
+}
+
+/* Inside Window Contents Box */
+.window-body {
+  padding: 25px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* Structural Capitalized Profile Copy */
+.description {
+  font-family: 'Archivo Black', 'Arial Black', sans-serif;
+  font-weight: 900;
+  font-size: 1.1rem;
+  line-height: 1.5;
+  color: #050300;
+  margin: 0;
+  text-transform: uppercase;
+}
+
+/* 4. ACTIONS FOOTER PANEL */
+.resume-row {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-top: 5px;
+}
+
+.pixel-folder-icon {
+  font-size: 3.2rem;
+  line-height: 1;
+  user-select: none;
+  filter: drop-shadow(3px 3px 0px #000000);
+}
+
+/* View Resume Pill Trigger Box */
+.resume-btn {
+  display: inline-block;
+  background-color: #FFFFFF;
+  color: #000000;
+  text-decoration: none;
+  font-family: 'Archivo Black', 'Arial Black', sans-serif;
+  font-weight: 900;
+  font-size: 1rem;
+  padding: 10px 30px;
+  border: 3px solid #000000;
+  border-radius: 50px; /* Capsule rounding */
+  box-shadow: 4px 4px 0px #000000;
+  text-transform: uppercase;
+  transition: all 0.1s ease;
+}
+
+.resume-btn:hover {
+  transform: translate(2px, 2px);
+  box-shadow: 2px 2px 0px #000000;
+}
+
+/* 5. RESPONSIVE COMPACT MEDIA QUERIES */
+@media (max-width: 850px) {
+  .about-container {
+    flex-direction: column; /* Safely stack on thin screens */
+    align-items: center;
+    gap: 30px;
+    padding: 10px 15px;
+  }
+  
+  .photo-wrapper {
+    max-width: 280px; /* Scale camera down cleanly for responsive viewports */
+  }
+
+  .retro-window {
+    width: 100%;
+    max-width: 480px;
+  }
+
+  .name-title {
+    font-size: 2rem;
+  }
+  
+  .description {
+    font-size: 0.95rem;
+  }
+}
