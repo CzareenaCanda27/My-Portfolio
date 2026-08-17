@@ -3,7 +3,7 @@ import React from 'react';
 import './assets/about.css'; 
 import myResumePdf from './assets/resume.pdf';
 // Correct relative paths to your image assets
-import cameraFrame from './assets/photo-framed.png'; 
+import cameraFrame from './assets/photo-framed.jpg'; 
 
 export default function About() {
   return (

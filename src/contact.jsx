@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { isAuthenticated } from './lib/auth-helper';
+import API_URL from './lib/api-config';
 
 export default function Contact() {
-  const navigate = useNavigate();
+  const auth = isAuthenticated();
 
   const [form, setForm] = useState({
     firstName: "",
@@ -12,32 +13,80 @@ export default function Contact() {
     message: ""
   });
 
+  const [contacts, setContacts] = useState([]);
+  const [statusMessage, setStatusMessage] = useState('');
+
+  // Admin-only: Fetch all submitted messages from MongoDB
+  useEffect(() => {
+    if (auth && auth.user.role === 'admin') {
+      fetchContacts();
+    }
+  }, []);
+
+  const fetchContacts = async () => {
+    try {
+      const res = await fetch(`${API_URL}/api/contacts`, {
+        headers: { 'Authorization': `Bearer ${auth.token}` }
+      });
+      const data = await res.json();
+      if (Array.isArray(data)) setContacts(data);
+    } catch (err) {
+      console.error("Error fetching contacts:", err);
+    }
+  };
+
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    
-    // 1. Log the captured data to your console for verification
-    console.log("Form Captured Data:", form); 
-    
-    // 2. Format the mailto string with clean templates and spacing
-    const emailTarget = "candaczareena@gmail.com";
-    const subject = encodeURIComponent(`Portfolio Message from ${form.firstName} ${form.lastName}`);
-    const body = encodeURIComponent(
-      `Name: ${form.firstName} ${form.lastName}\n` +
-      `Phone: ${form.number}\n` +
-      `Email: ${form.email}\n\n` +
-      `Message:\n${form.message}`
-    );
-    
-    // 3. Trigger the browser to open the user's local email application
-    window.location.href = `mailto:${emailTarget}?subject=${subject}&body=${body}`;
-    
-    // 4. Alert the user and seamlessly redirect them back to the Home page
-    alert(`Redirecting to your email client to send the message! Thank you, ${form.firstName}.`);
-    navigate("/");
+
+    const payload = {
+      firstname: form.firstName,
+      lastname: form.lastName,
+      email: form.email,
+      number: form.number,
+      message: form.message
+    };
+
+    try {
+      const res = await fetch(`${API_URL}/api/contacts`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      });
+      const data = await res.json();
+
+      if (!res.ok) {
+        setStatusMessage(data.error || 'Failed to submit message to server.');
+        return;
+      }
+
+      console.log('Form Saved to MongoDB:', data);
+      alert(`Message saved to database! Thank you, ${form.firstName}.`);
+      setForm({ firstName: '', lastName: '', number: '', email: '', message: '' });
+      setStatusMessage('Message submitted successfully!');
+
+      if (auth && auth.user.role === 'admin') {
+        fetchContacts();
+      }
+    } catch (err) {
+      console.error('Error submitting contact form:', err);
+      setStatusMessage('Failed to submit message to server.');
+    }
+  };
+
+  const handleDelete = async (id) => {
+    try {
+      await fetch(`${API_URL}/api/contacts/${id}`, {
+        method: 'DELETE',
+        headers: { 'Authorization': `Bearer ${auth.token}` }
+      });
+      fetchContacts();
+    } catch (err) {
+      console.error("Error deleting contact:", err);
+    }
   };
 
   return (
@@ -67,6 +116,12 @@ export default function Contact() {
           </div>
 
           <hr style={{ border: 'none', borderTop: '2px solid #000', margin: '5px 0' }} />
+
+          {statusMessage && (
+            <p style={{ fontFamily: 'monospace', color: '#00E5FF', fontWeight: 'bold', margin: 0 }}>
+              {statusMessage}
+            </p>
+          )}
 
           {/* ⭐ INTERACTIVE MESSAGE FORM */}
           <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
@@ -147,6 +202,53 @@ export default function Contact() {
               SUBMIT MESSAGE ➔
             </button>
           </form>
+
+          {/* ⭐ ADMIN-ONLY: RECEIVED MESSAGES LOG */}
+          {auth && auth.user.role === 'admin' && (
+            <div style={{ marginTop: '20px', borderTop: '2px dashed #000', paddingTop: '15px' }}>
+              <h3 style={{ fontFamily: 'Impact, sans-serif', letterSpacing: '1px', color: '#ff007f' }}>
+                ⚙️ ADMIN PANEL: DATABASE MESSAGES
+              </h3>
+              {contacts.length === 0 ? (
+                <p style={{ fontFamily: 'monospace' }}>No messages found in MongoDB.</p>
+              ) : (
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+                  {contacts.map((c) => (
+                    <div key={c._id} style={{ 
+                      backgroundColor: '#fff', 
+                      border: '2px solid #000', 
+                      padding: '10px', 
+                      boxShadow: '2px 2px 0px #000',
+                      display: 'flex',
+                      justifyContent: 'space-between',
+                      alignItems: 'center'
+                    }}>
+                      <div style={{ fontFamily: 'monospace' }}>
+                        <p style={{ margin: 0 }}><strong>{c.firstname} {c.lastname}</strong></p>
+                        <p style={{ margin: 0, color: '#555' }}>{c.email}</p>
+                        {c.number && <p style={{ margin: 0, color: '#555' }}>{c.number}</p>}
+                        {c.message && <p style={{ margin: '4px 0 0 0' }}>{c.message}</p>}
+                      </div>
+                      <button 
+                        onClick={() => handleDelete(c._id)}
+                        style={{
+                          backgroundColor: '#ff0055',
+                          color: '#fff',
+                          border: '2px solid #000',
+                          padding: '6px 12px',
+                          cursor: 'pointer',
+                          fontWeight: 'bold',
+                          fontFamily: 'Impact, sans-serif'
+                        }}
+                      >
+                        DELETE
+                      </button>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
+          )}
 
         </div>
       </div>

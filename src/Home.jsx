@@ -55,6 +55,23 @@ export default function Home() {
           </div>
 
           <hr style={{ border: 'none', borderTop: '2px solid #000', width: '100%', margin: '15px 0' }} />
+
+          {/* Assignment 4 CI/CD update marker */}
+          <div style={{
+            width: '100%',
+            border: '2px solid #000',
+            backgroundColor: '#ffff00',
+            boxShadow: '4px 4px 0 #000',
+            padding: '12px',
+            marginBottom: '10px',
+            boxSizing: 'border-box'
+          }}>
+            <h3 style={{ margin: '0 0 8px 0', fontFamily: 'Impact, sans-serif' }}>🚀 DEPLOYMENT UPDATE</h3>
+            <p style={{ margin: 0, fontWeight: 'bold', fontSize: '0.9rem' }}>
+              Assignment 4 CI/CD release: this portfolio is now tested, performance-optimized,
+              and deployed with continuous delivery through GitHub.
+            </p>
+          </div>
           
           {/* ACTION BUTTON SECTION */}
           <div className="home-actions-row" style={{ marginTop: '10px' }}>

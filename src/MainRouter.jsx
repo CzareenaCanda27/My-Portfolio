@@ -1,31 +1,39 @@
-import React from 'react';
-import { Route, Routes } from 'react-router-dom';
+import React, { Suspense, lazy } from 'react';
+import { Routes, Route } from 'react-router-dom';
+import Layout from './components/Layout';
 
-// CORE ROUTE PAGES (All sitting directly next to MainRouter inside /src)
-import Home from './Home';
-import About from './about';          
-import Contact from './contact';      
-import Education from './education';  
-import Project from './project';      
-import Services from './services';    
+const Home = lazy(() => import('./Home'));
+const About = lazy(() => import('./about'));
+const Services = lazy(() => import('./services'));
+const Project = lazy(() => import('./project'));
+const Education = lazy(() => import('./education'));
+const Contact = lazy(() => import('./contact'));
+const Signin = lazy(() => import('./Signin'));
+const Signup = lazy(() => import('./Signup'));
 
-// THE LAYOUT COMPONENT
-// Moves up one folder to escape 'src', then goes straight into 'components'
-import Layout from '../components/Layout';
+function PageLoader() {
+    return (
+        <div style={{ textAlign: 'center', padding: '40px', fontFamily: 'Impact, sans-serif' }}>
+            LOADING MODULE...
+        </div>
+    );
+}
 
-const MainRouter = () => {
-  return (
-    <Routes>
-      <Route path="/" element={<Layout />}>
-        <Route index element={<Home />} />
-        <Route path="about" element={<About />} />
-        <Route path="education" element={<Education />} />
-        <Route path="project" element={<Project />} />
-        <Route path="contact" element={<Contact />} />
-        <Route path="services" element={<Services />} />
-      </Route>
-    </Routes>
-  );
-};
-
-export default MainRouter;
+export default function MainRouter() {
+    return (
+        <Suspense fallback={<PageLoader />}>
+            <Routes>
+                <Route path="/" element={<Layout />}>
+                    <Route index element={<Home />} />
+                    <Route path="about" element={<About />} />
+                    <Route path="services" element={<Services />} />
+                    <Route path="project" element={<Project />} />
+                    <Route path="education" element={<Education />} />
+                    <Route path="contact" element={<Contact />} />
+                    <Route path="signin" element={<Signin />} />
+                    <Route path="signup" element={<Signup />} />
+                </Route>
+            </Routes>
+        </Suspense>
+    );
+}
